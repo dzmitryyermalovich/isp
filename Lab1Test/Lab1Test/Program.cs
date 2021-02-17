@@ -24,23 +24,23 @@ namespace Lab1
          Form_Arrays_from_signs(Primer, Sign, index_of_signs_in_char);
            
 
-          //  bool result = check(Primer, index_of_signs_in_char);
-          /*
+            bool result = check(Primer, index_of_signs_in_char);
+          
             if (result == false)
             {
                 Console.WriteLine("enter the value again you have a syntax error\n");
                 goto metka;
             }
-            */
+            
 
 
-//            Form_Arrays_from_digits(Primer, digits, index_of_signs_in_char, Sign);
+           Form_Arrays_from_digits(Primer, digits, index_of_signs_in_char, Sign);
 
-            //Multiplication(digits, index_of_signs_in_char, Sign);
+            Multiplication(digits, index_of_signs_in_char, Sign);
 
-            //divide(digits, index_of_signs_in_char, Sign);
+            divide(digits, index_of_signs_in_char, Sign);
 
-            //rezult_of_primer=sum(digits, index_of_signs_in_char, Sign);
+            rezult_of_primer=sum(digits, index_of_signs_in_char, Sign);
 
         }
 
