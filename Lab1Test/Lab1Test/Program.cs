@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 namespace Lab1
 {
+    // Задача 2
     class Program
     {
         static void Main(string[] args)
