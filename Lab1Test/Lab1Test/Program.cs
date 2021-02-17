@@ -19,29 +19,25 @@ namespace Lab1
 
             List<string> digits = new List<string>();
 
-            Primer=skobki(Primer);
-
-         Form_Arrays_from_signs(Primer, Sign, index_of_signs_in_char);
-           
-
-            bool result = check(Primer, index_of_signs_in_char);
-          
-            if (result == false)
-            {
-                Console.WriteLine("enter the value again you have a syntax error\n");
-                goto metka;
-            }
             
 
+             Form_Arrays_from_signs(Primer, Sign, index_of_signs_in_char);
 
-           Form_Arrays_from_digits(Primer, digits, index_of_signs_in_char, Sign);
 
+             bool result = check(Primer, index_of_signs_in_char);
+
+             if (result == false)
+            {
+              Console.WriteLine("enter the value again you have a syntax error\n");
+             goto metka;
+            }
+
+            Form_Arrays_from_digits(Primer, digits, index_of_signs_in_char, Sign);
             Multiplication(digits, index_of_signs_in_char, Sign);
-
             divide(digits, index_of_signs_in_char, Sign);
-
-            rezult_of_primer=sum(digits, index_of_signs_in_char, Sign);
-
+            rezult_of_primer = sum(digits, index_of_signs_in_char, Sign);
+            
+            
         }
 
         static void Multiplication(List<string> digits, List<string> index_of_signs_in_char, List<string> Sign)
@@ -68,6 +64,13 @@ namespace Lab1
                 }
                 j++;
             }
+            /*
+            Console.WriteLine("\n");
+            foreach (string peremena in digits)
+            {
+                Console.WriteLine(peremena);
+            }
+            */
         }
 
         static void Form_Arrays_from_signs(string Primer, List<string> Sign, List<string> index_of_signs_in_char)
@@ -78,37 +81,60 @@ namespace Lab1
                 Sign.Add("+");
                 index_of_signs_in_char.Add("0");
             }
-            for (int i = 0; i < Primer.Length; i++)
+            int i = 0;
+          //  for (int i = 0; i < Primer.Length; i++)
+                while(i< Primer.Length)
             {
                 char unit = Primer[i];
                 string index;
-                switch (unit)
+
+                if ((Primer[i] == '*' && Primer[i + 1] == '-') || (Primer[i] == '/' && Primer[i + 1] == '-'))
                 {
-                    case '+':
-                        Sign.Add("+");
-                        index = i.ToString();
-                        index_of_signs_in_char.Add(index);
-                        break;
-                    case '-':
-                        Sign.Add("-");
-                        index = i.ToString();
-                        index_of_signs_in_char.Add(index);
-                        break;
-                    case '*':
+                    if(Primer[i] == '*')
+                    {
                         Sign.Add("*");
-                        index = i.ToString();
-                        index_of_signs_in_char.Add(index);
-                        break;
-                    case '/':
+                    }
+                    else
+                    {
                         Sign.Add("/");
-                        index = i.ToString();
-                        index_of_signs_in_char.Add(index);
-                        break;
-
-
+                    }
+                    index = i.ToString();
+                    index_of_signs_in_char.Add(index);
+                    i += 1;
                 }
+                else
+                {
+                    switch (unit)
+                    {
+                        case '+':
+                            Sign.Add("+");
+                            index = i.ToString();
+                            index_of_signs_in_char.Add(index);
+                            
+                            break;
+                        case '-':
+                            Sign.Add("-");
+                            index = i.ToString();
+                            index_of_signs_in_char.Add(index);
+                            
+                            break;
+                        case '*':
+                            Sign.Add("*");
+                            index = i.ToString();
+                            index_of_signs_in_char.Add(index);
+                            
+                            break;
+                        case '/':
+                            Sign.Add("/");
+                            index = i.ToString();
+                            index_of_signs_in_char.Add(index);
+                            
+                            break;
 
 
+                    }
+                }
+                i++;
             }
             int number_of_elements = Primer.Length;
             string inf;
@@ -116,9 +142,9 @@ namespace Lab1
             index_of_signs_in_char.Add(inf);
             Sign.Add("+");
             /*
-            foreach(string i in Sign)
+            foreach(string j in Sign)
             {
-                Console.WriteLine(i);
+                Console.Write(j," ");
             }
             */
         }
@@ -165,7 +191,13 @@ namespace Lab1
                 digits.Add(number);
                 number = "";
             }
-
+            /*
+            Console.WriteLine("\n");
+            foreach (string j in digits)
+            {
+                Console.WriteLine(j);
+            }
+            */
         }
 
         static void divide(List<string> digits, List<string> index_of_signs_in_char, List<string> Sign)
@@ -193,6 +225,13 @@ namespace Lab1
                 }
                 j++;
             }
+            /*
+            Console.WriteLine("\n");
+            foreach (string peremena in digits)
+            {
+                Console.WriteLine(peremena);
+            }
+            */
         }
 
         static double sum(List<string> digits, List<string> index_of_signs_in_char, List<string> Sign)
@@ -263,52 +302,6 @@ namespace Lab1
             return true;
         }
 
-        static string skobki(string Primer)
-        {
-            string pod_stroka="";
-            string new_stroka = "";
-            double rezult_of_primer;
-            int reduce_size = 0 ;
-            for(int i = 0; i < Primer.Length; i++)
-            {
-                if (Primer[i] == '(')
-                {
-                    for (int j = i+1; j < Primer.Length; j++)
-                    {
-                        if (Primer[j] == ')')
-                        {
-                            for(int u = i + 1; u < j; u++)
-                            {
-                                pod_stroka = pod_stroka + Primer[u];
-                            }
-                            List<string> Sign_of_pod_stroka= new List<string>();
-
-                            List<string> index_of_signs_in_char_of_pod_stroka = new List<string>();
-
-                            List<string> digits_of_pod_stroka = new List<string>();
-
-
-                            Form_Arrays_from_signs(pod_stroka, Sign_of_pod_stroka, index_of_signs_in_char_of_pod_stroka);
-
-                            Form_Arrays_from_digits(pod_stroka, digits_of_pod_stroka, index_of_signs_in_char_of_pod_stroka, Sign_of_pod_stroka);
-
-                            Multiplication(digits_of_pod_stroka, index_of_signs_in_char_of_pod_stroka, Sign_of_pod_stroka);
-
-                            divide(digits_of_pod_stroka, index_of_signs_in_char_of_pod_stroka, Sign_of_pod_stroka);
-
-                            rezult_of_primer = sum(digits_of_pod_stroka, index_of_signs_in_char_of_pod_stroka, Sign_of_pod_stroka);
-
-                            pod_stroka=pod_stroka.Insert(0, "(");
-                            pod_stroka=pod_stroka.Insert(pod_stroka.Length, ")");
-
-                            Primer=Primer.Replace(pod_stroka, rezult_of_primer.ToString());
-
-                           // Console.WriteLine(rezult_of_primer);
-                        }
-                    }
-                }
-            }
-            return Primer;
-        }
+        
     }
 }
