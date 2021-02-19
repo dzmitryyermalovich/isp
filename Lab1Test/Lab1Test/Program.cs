@@ -1,300 +1,248 @@
-﻿using System;
-using System.Collections.Generic;
-namespace Lab1
+﻿namespace Lab1
 {
-    // Задача 2
-    class Program
+    using System;
+    using System.Collections.Generic;
+
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            double rezult_of_primer = 0;
-            string Primer;
-        metka:
-            Primer = "";
-
-            Primer = Convert.ToString(Console.ReadLine());
-
-            List<string> Sign = new List<string>();
-
-            List<string> index_of_signs_in_char = new List<string>();
-
-            List<string> digits = new List<string>();
-
-            
-
-             Form_Arrays_from_signs(Primer, Sign, index_of_signs_in_char);
-
-
-             bool result = check(Primer, index_of_signs_in_char);
-
-             if (result == false)
+            string inputPrimer;
+            while (true)
             {
-              Console.WriteLine("enter the value again you have a syntax error\n");
-             goto metka;
+                inputPrimer = Convert.ToString(Console.ReadLine());
+                List<string> signOfInputPrimer = new List<string>();
+                List<string> indexOfSignsInChar = new List<string>();
+                List<string> digitsOfInputPrimer = new List<string>();
+                FormArraysFromSigns(inputPrimer, signOfInputPrimer, indexOfSignsInChar);
+                bool result = CheckFunction(inputPrimer, indexOfSignsInChar);
+                if (result == false)
+                {
+                    Console.WriteLine("enter the value again you have a syntax error\n");
+                }
+                else
+                {
+                    FormArraysFromDigits(inputPrimer, digitsOfInputPrimer, indexOfSignsInChar, signOfInputPrimer);
+                    MultiplicationOperation(digitsOfInputPrimer, indexOfSignsInChar, signOfInputPrimer);
+                    DivideOperation(digitsOfInputPrimer, indexOfSignsInChar, signOfInputPrimer);
+                    double rezultOfPrimer = ResultOfPrimer(digitsOfInputPrimer, indexOfSignsInChar, signOfInputPrimer);
+                    break;
+                }
             }
-
-            Form_Arrays_from_digits(Primer, digits, index_of_signs_in_char, Sign);
-            Multiplication(digits, index_of_signs_in_char, Sign);
-            divide(digits, index_of_signs_in_char, Sign);
-            rezult_of_primer = sum(digits, index_of_signs_in_char, Sign);
-            
-            
         }
 
-        static void Multiplication(List<string> digits, List<string> index_of_signs_in_char, List<string> Sign)
+        private static void MultiplicationOperation(List<string> digitsOfInputPrimer, List<string> indexOfSignsInChar, List<string> signOfInputPrimer)
         {
+            float rezOfMultiplicationOfTwoNumbers;
+            int index = 0;
 
-            float rez_of_multiplication_of_two_numbers;
-
-
-            int j = 0;
-            int k = 0;
-            while (j < Sign.Count)
+            while (index < signOfInputPrimer.Count)
             {
-
-                if (Sign[j] == "*")
+                if (signOfInputPrimer[index] == "*")
                 {
-
-                    rez_of_multiplication_of_two_numbers = float.Parse(digits[j]) * float.Parse(digits[j - 1]);
-                    digits[j - 1] = rez_of_multiplication_of_two_numbers.ToString();
-                    digits.RemoveAt(j);
-                    Sign.RemoveAt(j);
-                    index_of_signs_in_char.RemoveAt(j);
-                    j = 0;
+                    rezOfMultiplicationOfTwoNumbers = float.Parse(digitsOfInputPrimer[index]) * float.Parse(digitsOfInputPrimer[index - 1]);
+                    digitsOfInputPrimer[index - 1] = rezOfMultiplicationOfTwoNumbers.ToString();
+                    digitsOfInputPrimer.RemoveAt(index);
+                    signOfInputPrimer.RemoveAt(index);
+                    indexOfSignsInChar.RemoveAt(index);
+                    index = 0;
                     continue;
                 }
-                j++;
+
+                index++;
             }
-            /*
-            Console.WriteLine("\n");
-            foreach (string peremena in digits)
-            {
-                Console.WriteLine(peremena);
-            }
-            */
         }
 
-        static void Form_Arrays_from_signs(string Primer, List<string> Sign, List<string> index_of_signs_in_char)
+        private static void FormArraysFromSigns(string inputPrimer, List<string> signOfInputPrimer, List<string> indexOfSignsInChar)
         {
-            char first_element = Primer[0];
-            if (first_element != '-')
+            char firstElement = inputPrimer[0];
+            if (firstElement != '-')
             {
-                Sign.Add("+");
-                index_of_signs_in_char.Add("0");
+                signOfInputPrimer.Add("+");
+                indexOfSignsInChar.Add("0");
             }
-            int i = 0;
-          //  for (int i = 0; i < Primer.Length; i++)
-                while(i< Primer.Length)
-            {
-                char unit = Primer[i];
-                string index;
 
-                if ((Primer[i] == '*' && Primer[i + 1] == '-') || (Primer[i] == '/' && Primer[i + 1] == '-'))
+            int index = 0;
+            while (index < inputPrimer.Length)
+            {
+                string unit;
+                if ((inputPrimer[index] == '*' && inputPrimer[index + 1] == '-') || (inputPrimer[index] == '/' && inputPrimer[index + 1] == '-'))
                 {
-                    if(Primer[i] == '*')
+                    if (inputPrimer[index] == '*')
                     {
-                        Sign.Add("*");
+                        signOfInputPrimer.Add("*");
                     }
                     else
                     {
-                        Sign.Add("/");
+                        signOfInputPrimer.Add("/");
                     }
-                    index = i.ToString();
-                    index_of_signs_in_char.Add(index);
-                    i += 1;
+
+                    unit = index.ToString();
+                    indexOfSignsInChar.Add(unit);
+                    index += 1;
                 }
                 else
                 {
-                    switch (unit)
+                    switch (inputPrimer[index])
                     {
                         case '+':
-                            Sign.Add("+");
-                            index = i.ToString();
-                            index_of_signs_in_char.Add(index);
-                            
+                            signOfInputPrimer.Add("+");
+                            unit = index.ToString();
+                            indexOfSignsInChar.Add(unit);
                             break;
                         case '-':
-                            Sign.Add("-");
-                            index = i.ToString();
-                            index_of_signs_in_char.Add(index);
-                            
+                            signOfInputPrimer.Add("-");
+                            unit = index.ToString();
+                            indexOfSignsInChar.Add(unit);
                             break;
                         case '*':
-                            Sign.Add("*");
-                            index = i.ToString();
-                            index_of_signs_in_char.Add(index);
-                            
+                            signOfInputPrimer.Add("*");
+                            unit = index.ToString();
+                            indexOfSignsInChar.Add(unit);
                             break;
                         case '/':
-                            Sign.Add("/");
-                            index = i.ToString();
-                            index_of_signs_in_char.Add(index);
-                            
+                            signOfInputPrimer.Add("/");
+                            unit = index.ToString();
+                            indexOfSignsInChar.Add(unit);
                             break;
-
-
                     }
                 }
-                i++;
+
+                index++;
             }
-            int number_of_elements = Primer.Length;
-            string inf;
-            inf = number_of_elements.ToString();
-            index_of_signs_in_char.Add(inf);
-            Sign.Add("+");
-            /*
-            foreach(string j in Sign)
-            {
-                Console.Write(j," ");
-            }
-            */
+
+            int numberOfElements = inputPrimer.Length;
+            string buff;
+            buff = numberOfElements.ToString();
+            indexOfSignsInChar.Add(buff);
+            signOfInputPrimer.Add("+");
         }
 
-        static void Form_Arrays_from_digits(string Primer, List<string> digits, List<string> index_of_signs_in_char, List<string> Sign)
+        private static void FormArraysFromDigits(string inputPrimer, List<string> digitsOfInputPrimer, List<string> indexOfSignsInChar, List<string> signOfInputPrimer)
         {
-            int number_of_index_of_signs = index_of_signs_in_char.Count;
+            int numberOfIndexOfSigns = indexOfSignsInChar.Count;
 
-            int[] index_of_signs_in_int = new int[number_of_index_of_signs];
+            int[] indexOfSignsInInt = new int[numberOfIndexOfSigns];
 
             int unit;
 
-            for (int i = 0; i < number_of_index_of_signs; i++)
+            for (int i = 0; i < numberOfIndexOfSigns; i++)
             {
-                unit = int.Parse(index_of_signs_in_char[i]);
-                index_of_signs_in_int[i] = unit;
+                unit = int.Parse(indexOfSignsInChar[i]);
+                indexOfSignsInInt[i] = unit;
             }
-            int begin;
-            int end;
-            string number = "";
-            int k = 0;
 
-            for (int i = 1; i < number_of_index_of_signs; i++)
+            int beginOfIndexSign;
+            int endOfIndexSign;
+            string numberInStr = string.Empty;
+            int nomerOfIteration = 0;
+
+            for (int i = 1; i < numberOfIndexOfSigns; i++)
             {
-                // raz = index_of_signs_in_int[i] - index_of_signs_in_int[i - 1]-1;
-
-                if (Sign[0] == "+" && index_of_signs_in_char[0] == "0" && k == 0)
+                if (signOfInputPrimer[0] == "+" && indexOfSignsInChar[0] == "0" && nomerOfIteration == 0)
                 {
-                    begin = index_of_signs_in_int[i - 1];
-                    k++;
-
+                    beginOfIndexSign = indexOfSignsInInt[i - 1];
+                    nomerOfIteration++;
                 }
                 else
                 {
-                    begin = index_of_signs_in_int[i - 1] + 1;
+                    beginOfIndexSign = indexOfSignsInInt[i - 1] + 1;
                 }
 
-                end = index_of_signs_in_int[i];
-                //begin = index_of_signs_in_int[i - 1] + 1;
-                for (int j = begin; j < end; j++)
+                endOfIndexSign = indexOfSignsInInt[i];
+                for (int j = beginOfIndexSign; j < endOfIndexSign; j++)
                 {
-                    number += Primer[j];
+                    numberInStr += inputPrimer[j];
                 }
-                digits.Add(number);
-                number = "";
+
+                digitsOfInputPrimer.Add(numberInStr);
+                numberInStr = string.Empty;
             }
-            /*
-            Console.WriteLine("\n");
-            foreach (string j in digits)
-            {
-                Console.WriteLine(j);
-            }
-            */
         }
 
-        static void divide(List<string> digits, List<string> index_of_signs_in_char, List<string> Sign)
+        private static void DivideOperation(List<string> digitsOfInputPrimer, List<string> indexOfSignsInChar, List<string> signOfInputPrimer)
         {
-            float rez_of_divide_of_two_numbers;
-            int j = 0;
-            int k = 0;
-            while (j < Sign.Count)
-            {
+            float rezOfDivideOfTwoNumbers;
+            int index = 0;
 
-                if (Sign[j] == "/")
+            while (index < signOfInputPrimer.Count)
+            {
+                if (signOfInputPrimer[index] == "/")
                 {
-                    if (float.Parse(digits[j]) == 0)
+                    if (float.Parse(digitsOfInputPrimer[index]) == 0)
                     {
                         Console.WriteLine("You can divide on 0");
                         Environment.Exit(0);
                     }
-                    rez_of_divide_of_two_numbers = float.Parse(digits[j - 1]) / float.Parse(digits[j]);
-                    digits[j - 1] = rez_of_divide_of_two_numbers.ToString();
-                    digits.RemoveAt(j);
-                    Sign.RemoveAt(j);
-                    index_of_signs_in_char.RemoveAt(j);
-                    j = 0;
+
+                    rezOfDivideOfTwoNumbers = float.Parse(digitsOfInputPrimer[index - 1]) / float.Parse(digitsOfInputPrimer[index]);
+                    digitsOfInputPrimer[index - 1] = rezOfDivideOfTwoNumbers.ToString();
+                    digitsOfInputPrimer.RemoveAt(index);
+                    signOfInputPrimer.RemoveAt(index);
+                    indexOfSignsInChar.RemoveAt(index);
+                    index = 0;
                     continue;
                 }
-                j++;
+
+                index++;
             }
-            /*
-            Console.WriteLine("\n");
-            foreach (string peremena in digits)
-            {
-                Console.WriteLine(peremena);
-            }
-            */
         }
 
-        static double sum(List<string> digits, List<string> index_of_signs_in_char, List<string> Sign)
+        private static double ResultOfPrimer(List<string> digitsOfInputPrimer, List<string> indexOfSignsInChar, List<string> signOfInputPrimer)
         {
-
-            int number_of_index_of_signs = index_of_signs_in_char.Count;
-
-            number_of_index_of_signs -= 1;
-
-            index_of_signs_in_char.RemoveAt(number_of_index_of_signs);
-
-            int num_of_signes = Sign.Count;
-
-            num_of_signes -= 1;
-
-            Sign.RemoveAt(num_of_signes);
-            float unit = 0;
-            for (int i = 0; i < Sign.Count; i++)
-
+            int numberOfIndexOfSigns = indexOfSignsInChar.Count;
+            numberOfIndexOfSigns -= 1;
+            indexOfSignsInChar.RemoveAt(numberOfIndexOfSigns);
+            int numOfSignes = signOfInputPrimer.Count;
+            numOfSignes -= 1;
+            signOfInputPrimer.RemoveAt(numOfSignes);
+            float unit;
+            for (int i = 0; i < signOfInputPrimer.Count; i++)
             {
-                if (Sign[i] == "-")
+                if (signOfInputPrimer[i] == "-")
                 {
-                    unit = float.Parse(digits[i]);
+                    unit = float.Parse(digitsOfInputPrimer[i]);
                     unit *= -1;
-                    digits[i] = unit.ToString();
+                    digitsOfInputPrimer[i] = unit.ToString();
                 }
             }
+
             float summa = 0;
-            foreach (string i in digits)
+            foreach (string i in digitsOfInputPrimer)
             {
                 unit = float.Parse(i);
                 summa = summa + unit;
             }
+
             Console.WriteLine(summa);
             return summa;
         }
 
-        static bool check(string Primer,List<string> index_of_signs_in_char)
+        private static bool CheckFunction(string inputPrimer, List<string> indexOfSignsInChar)
         {
-            for(int i = 0; i < Primer.Length; i++)
+            for (int i = 0; i < inputPrimer.Length; i++)
             {
-                int element = Convert.ToChar(Primer[i]);
+                int element = Convert.ToChar(inputPrimer[i]);
 
-                if (element<42 || element>57 || element == 44)
-                {
-                    return false;
-                }
-                
-            }
-            int difference_between_neighboring;
-            for (int i=1;i<index_of_signs_in_char.Count; i++)
-            {
-                difference_between_neighboring=int.Parse(index_of_signs_in_char[i]) - int.Parse(index_of_signs_in_char[i - 1]);
-                if (difference_between_neighboring == 1 && index_of_signs_in_char[i-1]!="0")
+                if (element < 42 || element > 57 || element == 44)
                 {
                     return false;
                 }
             }
 
-            for (int i = 1; i < Primer.Length; i++)
+            int differenceBetweenNeighboring;
+            for (int i = 1; i < indexOfSignsInChar.Count; i++)
             {
-                 if(Primer[i]== Primer[i-1] && Primer[i] == '.')
+                differenceBetweenNeighboring = int.Parse(indexOfSignsInChar[i]) - int.Parse(indexOfSignsInChar[i - 1]);
+                if (differenceBetweenNeighboring == 1 && indexOfSignsInChar[i - 1] != "0")
+                {
+                    return false;
+                }
+            }
+
+            for (int i = 1; i < inputPrimer.Length; i++)
+            {
+                if (inputPrimer[i] == inputPrimer[i - 1] && inputPrimer[i] == '.')
                 {
                     return false;
                 }
@@ -302,7 +250,5 @@ namespace Lab1
 
             return true;
         }
-
-        
     }
 }
