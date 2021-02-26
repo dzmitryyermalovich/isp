@@ -16,16 +16,23 @@
                 List<string> digitsOfInputPrimer = new List<string>();
                 FormArraysFromSigns(inputPrimer, signOfInputPrimer, indexOfSignsInChar);
                 bool result = CheckFunction(inputPrimer, indexOfSignsInChar);
+
                 if (result == false)
                 {
                     Console.WriteLine("enter the value again you have a syntax error\n");
                 }
                 else
                 {
+                    inputPrimer = ExpandBrackets(inputPrimer);
+                    signOfInputPrimer.Clear();
+                    indexOfSignsInChar.Clear();
+                    digitsOfInputPrimer.Clear();
+                    FormArraysFromSigns(inputPrimer, signOfInputPrimer, indexOfSignsInChar);
                     FormArraysFromDigits(inputPrimer, digitsOfInputPrimer, indexOfSignsInChar, signOfInputPrimer);
                     MultiplicationOperation(digitsOfInputPrimer, indexOfSignsInChar, signOfInputPrimer);
                     DivideOperation(digitsOfInputPrimer, indexOfSignsInChar, signOfInputPrimer);
                     double rezultOfPrimer = ResultOfPrimer(digitsOfInputPrimer, indexOfSignsInChar, signOfInputPrimer);
+                    Console.WriteLine(rezultOfPrimer);
                     break;
                 }
             }
@@ -211,10 +218,9 @@
             foreach (string i in digitsOfInputPrimer)
             {
                 unit = float.Parse(i);
-                summa = summa + unit;
+                summa += unit;
             }
 
-            Console.WriteLine(summa);
             return summa;
         }
 
@@ -224,7 +230,7 @@
             {
                 int element = Convert.ToChar(inputPrimer[i]);
 
-                if (element < 42 || element > 57 || element == 44)
+                if (element < 40 || element > 57 || element == 44)
                 {
                     return false;
                 }
@@ -249,6 +255,105 @@
             }
 
             return true;
+        }
+
+        private static string ExpandBrackets(string inputPrimer)
+        {
+            int i = 0, j;
+            string unit = string.Empty;
+            string substring = string.Empty;
+            string sign = string.Empty;
+
+            if (inputPrimer[0] == '(')
+            {
+                inputPrimer = inputPrimer.Insert(0, "+");
+            }
+
+            while (i < inputPrimer.Length)
+            {
+                if (inputPrimer[i] == '(')
+                {
+                    j = i + 1;
+
+                    while (j < inputPrimer.Length)
+                    {
+                        substring += inputPrimer[j];
+                        if (inputPrimer[j] == ')')
+                        {
+                            substring = substring.Remove(substring.Length - 1);
+
+                            List<string> signOfInputPrimer = new List<string>();
+                            List<string> indexOfSignsInChar = new List<string>();
+                            List<string> digitsOfInputPrimer = new List<string>();
+
+                            FormArraysFromSigns(substring, signOfInputPrimer, indexOfSignsInChar);
+                            FormArraysFromDigits(substring, digitsOfInputPrimer, indexOfSignsInChar, signOfInputPrimer);
+                            MultiplicationOperation(digitsOfInputPrimer, indexOfSignsInChar, signOfInputPrimer);
+                            DivideOperation(digitsOfInputPrimer, indexOfSignsInChar, signOfInputPrimer);
+                            double rezultOfPrimer = ResultOfPrimer(digitsOfInputPrimer, indexOfSignsInChar, signOfInputPrimer);
+
+                            if (inputPrimer[i - 1] == '-' && rezultOfPrimer < 0)
+                            {
+                                substring = substring.Insert(0, "-(");
+                                substring = substring.Insert(substring.Length, ")");
+                                rezultOfPrimer *= -1;
+                                unit += '+';
+                                unit += rezultOfPrimer.ToString();
+                                inputPrimer = inputPrimer.Replace(substring, unit);
+                            }
+
+                            if ((inputPrimer[i - 1] == '-' && rezultOfPrimer > 0) || (inputPrimer[i - 1] == '+' && rezultOfPrimer < 0))
+                            {
+                                sign = sign + inputPrimer[i - 1] + inputPrimer[i];
+                                substring = substring.Insert(0, sign);
+                                substring = substring.Insert(substring.Length, ")");
+                                unit += '-';
+                                rezultOfPrimer = Math.Abs(rezultOfPrimer);
+                                unit += rezultOfPrimer.ToString();
+                                inputPrimer = inputPrimer.Replace(substring, unit);
+                            }
+
+                            if (inputPrimer[i - 1] == '+' && rezultOfPrimer > 0)
+                            {
+                                substring = substring.Insert(0, "+(");
+                                substring = substring.Insert(substring.Length, ")");
+                                unit += '+';
+                                unit += rezultOfPrimer.ToString();
+                                inputPrimer = inputPrimer.Replace(substring, unit);
+                            }
+
+                            if (inputPrimer[i - 1] == '*' || inputPrimer[i - 1] == '/')
+                            {
+                                sign += inputPrimer[i];
+                                substring = substring.Insert(0, sign);
+                                substring = substring.Insert(substring.Length, ")");
+                                unit += rezultOfPrimer.ToString();
+                                inputPrimer = inputPrimer.Replace(substring, unit);
+                            }
+
+                            signOfInputPrimer.Clear();
+                            indexOfSignsInChar.Clear();
+                            digitsOfInputPrimer.Clear();
+                            substring = string.Empty;
+                            sign = string.Empty;
+                            unit = string.Empty;
+                            i = -1;
+                            break;
+                        }
+
+                        j++;
+                    }
+                }
+
+                i++;
+            }
+
+            if (inputPrimer[0] == '+')
+            {
+                inputPrimer = inputPrimer.Replace("+", string.Empty);
+            }
+
+            return inputPrimer;
         }
     }
 }
