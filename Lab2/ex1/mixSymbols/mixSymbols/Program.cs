@@ -1,30 +1,28 @@
 ﻿using System;
 
-namespace mixSymbols
+namespace MixSymbols
 {
-    class Program
+      class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             string inputStr;
             inputStr = Convert.ToString(Console.ReadLine());
 
-            
             char[] inputStrInChar = new char[100];
             inputStrInChar = inputStr.ToCharArray();
-
 
             Random rnd = new Random();
             int newIndex;
             char temporaryVariable;
 
-            for (int i= inputStrInChar.Length-1; i >= 1; i--) 
+            for (int i = inputStrInChar.Length - 1; i >= 1; i--)
             {
                 if (inputStrInChar[i] != ' ')
                 {
                     while (true)
                     {
-                        newIndex = rnd.Next(i+1);
+                        newIndex = rnd.Next(i + 1);
                         if (inputStrInChar[newIndex] != ' ')
                         {
                             break;
@@ -34,15 +32,13 @@ namespace mixSymbols
                     temporaryVariable = inputStrInChar[i];
                     inputStrInChar[i] = inputStrInChar[newIndex];
                     inputStrInChar[newIndex] = temporaryVariable;
-
                 }
             }
-         
-            for(int i=0; i<inputStrInChar.Length; i++) 
+
+            for (int i = 0; i < inputStrInChar.Length; i++)
             {
                 Console.Write(inputStrInChar[i]);
             }
-
         }
     }
 }
