@@ -170,11 +170,10 @@ namespace lab3
             faculty = Console.ReadLine();
 
             StudentWithSpecialty student = new StudentWithSpecialty(name, age, university, faculty);
-            Console.WriteLine("\nChoose a function:\n1) Print Info\n2) Enter the Universite\n");
 
             while (true)
             {
-                Console.WriteLine("\n");
+                Console.WriteLine("\nChoose a function:\n1) Print Info\n2) Enter the Universite\n");
                 activation = Convert.ToInt32(Console.ReadLine());
                 switch (activation)
                 {
