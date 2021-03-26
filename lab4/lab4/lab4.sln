@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lab4", "lab4\lab4.csproj", "{323C820F-A9BC-400D-B656-CA945392C4D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "keyLogger", "..\..\..\..\Education\Rubish\C#\MyDll\keyLogger\keyLogger\keyLogger.csproj", "{287EB964-464B-4E80-9D5B-831A4F840AF6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{323C820F-A9BC-400D-B656-CA945392C4D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{323C820F-A9BC-400D-B656-CA945392C4D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{323C820F-A9BC-400D-B656-CA945392C4D6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{287EB964-464B-4E80-9D5B-831A4F840AF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{287EB964-464B-4E80-9D5B-831A4F840AF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{287EB964-464B-4E80-9D5B-831A4F840AF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{287EB964-464B-4E80-9D5B-831A4F840AF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
