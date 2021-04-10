@@ -110,7 +110,26 @@ namespace lab5
                                 case 3:
                                     Console.WriteLine("\nAre you late?");
                                     answer = Console.ReadLine();
-                                    student.AttendLesson(answer);
+                                    human.AttendMeeting(answer);
+                                    break;
+                            }
+
+                            break;
+                        case 1:
+                            Console.WriteLine("\nChoose a function:\n1) Print Info\n2) Try pass the exams and enter the university\n3) Attend a lesson");
+                            activation = Convert.ToInt32(Console.ReadLine());
+                            switch (activation)
+                            {
+                                case 1:
+                                    human.PrintInfoAboutOrganizm();
+                                    break;
+                                case 2:
+                                    human.PassExamsAndEnterTheUniversity();
+                                    break;
+                                case 3:
+                                    Console.WriteLine("\nAre you late?");
+                                    answer = Console.ReadLine();
+                                    human.AttendMeeting(answer);
                                     break;
                             }
 
