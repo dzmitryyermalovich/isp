@@ -231,7 +231,7 @@ namespace lab5
 
                                     break;
                                 case 6:
-                                    cheakPrograss = Convert.ToBoolean(student);
+                                    cheakPrograss = student.ToBoolean(null);
                                     if (cheakPrograss)
                                     {
                                         Console.WriteLine("You study very well");

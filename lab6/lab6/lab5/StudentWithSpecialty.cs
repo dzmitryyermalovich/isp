@@ -2,7 +2,7 @@
 
 namespace lab5
 {
-    sealed class StudentWithSpecialty : Student, IDoHomework, IComparable<StudentWithSpecialty>, IConvertible
+    sealed class StudentWithSpecialty : Student, IDoHomework, IComparable<StudentWithSpecialty>
     {
         protected string faculty;
         protected double averageScore;
@@ -150,7 +150,7 @@ namespace lab5
             return TypeCode.Object;
         }
 
-        bool IConvertible.ToBoolean(IFormatProvider provider)
+        public bool ToBoolean(IFormatProvider provider)
         {
             if (this.averageScore > 7.0)
             {
@@ -167,77 +167,77 @@ namespace lab5
             return Math.Sqrt(this.averageScore * this.averageScore);
         }
 
-        byte IConvertible.ToByte(IFormatProvider provider)
+        byte ToByte(IFormatProvider provider)
         {
             return Convert.ToByte(this.GetDoubleValue());
         }
 
-        char IConvertible.ToChar(IFormatProvider provider)
+        char ToChar(IFormatProvider provider)
         {
             return Convert.ToChar(this.GetDoubleValue());
         }
 
-        DateTime IConvertible.ToDateTime(IFormatProvider provider)
+        DateTime ToDateTime(IFormatProvider provider)
         {
             return Convert.ToDateTime(this.GetDoubleValue());
         }
 
-        decimal IConvertible.ToDecimal(IFormatProvider provider)
+        decimal ToDecimal(IFormatProvider provider)
         {
             return Convert.ToDecimal(this.GetDoubleValue());
         }
 
-        double IConvertible.ToDouble(IFormatProvider provider)
+        double ToDouble(IFormatProvider provider)
         {
             return this.GetDoubleValue();
         }
 
-        short IConvertible.ToInt16(IFormatProvider provider)
+        short ToInt16(IFormatProvider provider)
         {
             return Convert.ToInt16(this.GetDoubleValue());
         }
 
-        int IConvertible.ToInt32(IFormatProvider provider)
+        int ToInt32(IFormatProvider provider)
         {
             return Convert.ToInt32(this.GetDoubleValue());
         }
 
-        long IConvertible.ToInt64(IFormatProvider provider)
+        long ToInt64(IFormatProvider provider)
         {
             return Convert.ToInt64(this.GetDoubleValue());
         }
 
-        sbyte IConvertible.ToSByte(IFormatProvider provider)
+        sbyte ToSByte(IFormatProvider provider)
         {
             return Convert.ToSByte(this.GetDoubleValue());
         }
 
-        float IConvertible.ToSingle(IFormatProvider provider)
+        float ToSingle(IFormatProvider provider)
         {
             return Convert.ToSingle(this.GetDoubleValue());
         }
 
-        string IConvertible.ToString(IFormatProvider provider)
+        string ToString(IFormatProvider provider)
         {
             return String.Format("({0}, {1})", this.averageScore);
         }
 
-        object IConvertible.ToType(Type conversionType, IFormatProvider provider)
+        object ToType(Type conversionType, IFormatProvider provider)
         {
             return Convert.ChangeType(this.GetDoubleValue(), conversionType);
         }
 
-        ushort IConvertible.ToUInt16(IFormatProvider provider)
+        ushort ToUInt16(IFormatProvider provider)
         {
             return Convert.ToUInt16(this.GetDoubleValue());
         }
 
-        uint IConvertible.ToUInt32(IFormatProvider provider)
+        uint ToUInt32(IFormatProvider provider)
         {
             return Convert.ToUInt32(this.GetDoubleValue());
         }
 
-        ulong IConvertible.ToUInt64(IFormatProvider provider)
+        ulong ToUInt64(IFormatProvider provider)
         {
             return Convert.ToUInt64(this.GetDoubleValue());
         }
