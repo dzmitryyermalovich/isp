@@ -113,7 +113,7 @@ namespace lab7
             return numeratorChisla1 != numeratorChisla2;
         }
 
-        public static void ProcessStr(string[] str, List<RationalNumber> numbers)
+        public static void processStr(string[] str, List<RationalNumber> numbers)
         {
             char buf;
             StringBuilder buf2 = new StringBuilder();
@@ -173,6 +173,32 @@ namespace lab7
             }
         }
 
+        public static void reduceFraction(RationalNumber num1)
+        {
+            int minChislo = 0;
+            if (Math.Abs(num1.Numerator) > Math.Abs(num1.Denominator))
+            {
+                minChislo = Math.Abs(num1.Denominator);
+            }
+            else
+            {
+                minChislo = Math.Abs(num1.Numerator);
+            }
+
+            int i = 2;
+            while (i <= minChislo)
+            {
+                if ((num1.Denominator % i == 0) & (num1.Numerator % i == 0))
+                {
+                    num1.Denominator /= i;
+                    num1.Numerator /= i;
+                    i = 1;
+                }
+
+                i++;
+            }
+        }
+
         public static void getType(RationalNumber num1, string format)
         {
             if (format == "in decimal")
@@ -229,6 +255,59 @@ namespace lab7
         {
             string str = rationalNumber.ToString("in decimal");
             return Convert.ToDouble(str);
+        }
+
+        public static explicit operator RationalNumber(string c)
+        {
+            char buf;
+            StringBuilder buf1 = new StringBuilder();
+            StringBuilder buf2 = new StringBuilder();
+            if (c.Contains("/"))
+                {
+                    for (int i = 0; i < c.Length; i++)
+                    {
+                        buf = c[i];
+                        if (buf == '/')
+                        {
+                            for (int j = i + 1; j < c.Length; j++)
+                            {
+                                buf1.Append(c[j]);
+                            }
+
+                            return new RationalNumber
+                            {
+                                Denominator = Convert.ToInt32(buf1.ToString()),
+                                Numerator = Convert.ToInt32(buf2.ToString()),
+                            };
+                        }
+                        else
+                        {
+                            buf2.Append(c[i]);
+                        }
+                    }
+                }
+
+            if (c.Contains("."))
+                {
+                    for (int i = 0; i < c.Length; i++)
+                    {
+                        buf = c[i];
+                        if (buf == '.')
+                        {
+                           return new RationalNumber
+                            {
+                                Denominator = Convert.ToInt32(Math.Pow(10, c.Length - i - 1)),
+                                Numerator = Convert.ToInt32(Convert.ToDouble(c) * Convert.ToDouble(Math.Pow(10, c.Length - i - 1))),
+                            };
+                        }
+                        else
+                        {
+                            buf1.Append(c[i]);
+                        }
+                    }
+            }
+
+            return null;
         }
     }
 }
