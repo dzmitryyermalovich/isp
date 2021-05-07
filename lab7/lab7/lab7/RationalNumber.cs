@@ -234,8 +234,8 @@ namespace lab7
         {
             if (obj.GetType() != this.GetType()) return false;
             RationalNumber p = (RationalNumber)obj;
-            int cheak = this.CompareTo(p);
-            if (cheak == 0)
+            int cheсk = this.CompareTo(p);
+            if (cheсk == 0)
             {
                 return true;
             }
